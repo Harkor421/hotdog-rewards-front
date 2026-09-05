@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌭 COSTCO — Frontend
 
-## Getting Started
+The page for [`costco-back`](https://github.com/Harkor421/costco-back): a countdown,
+a hot dog, and every dollar the treasury has ever handed out.
 
-First, run the development server:
+**Next.js 16 · React 19 · Tailwind v4 · Magic UI · Three.js**
+
+---
+
+## The hot dog
+
+It is the whole page, so it is worth saying how it is built: **there is no model
+file and no texture file.** The bun, the sausage and both sauces are generated in
+the browser, and every map on them is value noise painted onto a canvas.
+
+That is not a stunt. It is what makes the page load instantly and never break:
+
+- **Nothing can 404.** No `.glb`, no HDR environment, no JPEG. drei's `Environment`
+  presets pull a few megabytes from a third-party CDN, so the environment here is
+  three `Lightformer`s instead — a warm key overhead, a red bounce from the left, a
+  cool rim from the right. The sauces have something to reflect and it costs nothing.
+- **The bun is one extruded cross-section**, not two half-loaves stuck together, so
+  the groove the sausage sits in is genuinely part of the same surface and catches
+  light the way a slit in bread does. The cross-section is centred along its
+  **length only** — `geometry.center()` would also recentre Y, which lifts the bun
+  and closes the bread over the sausage. That is a bap, not a hot dog.
+- **The sauces are swept around the sausage, not across it.** The zigzag is an angle
+  orbiting the cylinder rather than a sideways offset in `x`, so the ribbon stays
+  welded to the curved surface instead of sinking into it at the crests.
+- **The bun is shorter than the sausage on purpose.** A dog that ends flush with its
+  bun reads as a sandwich. The overhang is the silhouette.
+- Noise is generated on a **wrapping lattice**, so the bread has no seam where the
+  UVs repeat. Albedo rides the low-frequency octaves, bump rides the high ones —
+  which is what separates baked bread from an orange plastic tube.
+
+It pops when a round is served, and you can drag it.
+
+## Live state
+
+One WebSocket carries everything; REST fills in the history. `lib/useCostco.ts`
+holds the whole thing, and two details in it are load-bearing:
+
+- **The countdown runs through a clock offset, not a local timer.** Every message
+  carries the server's timestamp, and the difference against `Date.now()` is a
+  running correction. The promise of the page is that the bell rings at the same
+  instant for everyone — including on a laptop whose clock is four minutes fast.
+- **Counters move optimistically and reconcile a beat later.** A number that only
+  updates on the next poll makes the page look asleep at the exact moment it is
+  doing its one job. When the authoritative totals land, the optimistic ones are
+  dropped rather than added to.
+
+## Honesty on screen
+
+The backend can only count what it has seen since it last booted when no database
+is attached, so `/stats` says `source: "since-boot"` and **the page prints that**
+under the counter. A total that quietly reset on a deploy would be the page lying
+about the only thing anybody came here to check. The same goes for:
+
+- a treasury that is *unset* versus one that is *empty* — very different things,
+  never shown the same way;
+- a round where the brake bit, which says **"0.50 hot dogs each"** rather than
+  rounding up to one;
+- rounds that fed nobody, listed with the reason they refused;
+- a demo queue, labelled as a demo everywhere it appears.
+
+## Run it
 
 ```bash
+npm install
+cp .env.example .env.local     # point it at your backend
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```
+NEXT_PUBLIC_BACKEND_URL=wss://costco-back-production.up.railway.app
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The client derives the `https://` origin from that same value, so there is one URL
+to set, not two.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploy
 
-## Learn More
+Vercel, as-is. Set `NEXT_PUBLIC_BACKEND_URL` in the project's environment variables
+and push — the page is static, and everything live arrives over the socket.
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+vercel --prod
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Layout
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/            page + layout
+components/
+  hotdog/       the model, the stage, and the noise that textures it
+  magicui/      Magic UI components (number ticker, border beam, shimmer, marquee…)
+  site/         the sections of the page
+lib/            wire types, formatting, and the live-state hook
+```
