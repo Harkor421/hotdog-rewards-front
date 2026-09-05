@@ -142,6 +142,14 @@ export function useCostco(): CostcoState {
             setService(h.service);
             setPot(h.pot);
             setViewers(h.viewers ?? 0);
+            // Seed the queue from the last round the server served. A round
+            // takes seconds and the gap between them is five minutes, so
+            // almost everyone arrives while nothing is happening — and an
+            // empty list reads as "this does not work", not as "wait".
+            if (h.lastRound?.items?.length) {
+              setLastResult(h.lastRound);
+              setFeed((f) => (f.length ? f : [...h.lastRound!.items!].reverse().slice(0, 120)));
+            }
             // Without a database the server's own since-boot tally is the only
             // record there is, so seed from it rather than showing zeroes.
             if (h.session) setStats((prev) => prev ?? { ...h.session!, ready: false, source: "since-boot" });
