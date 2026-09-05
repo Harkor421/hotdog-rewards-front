@@ -136,6 +136,8 @@ export type RoundRow = {
   ts: number;
 };
 
+export type LastRound = ServeResult & { at: number };
+
 export type Hello = {
   type: "hello";
   ts: number;
@@ -147,6 +149,7 @@ export type Hello = {
   history: Round[];
   service: Service | null;
   pot: Pot | null;
+  lastRound: LastRound | null;
   session: Totals | null;
   viewers: number;
 };
