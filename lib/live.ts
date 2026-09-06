@@ -139,7 +139,13 @@ export function useLive(): LiveState {
         switch (m.type) {
           case "hello": {
             const h = m as unknown as Hello;
-            if (h.brand) setBrand(h.brand);
+            // MERGE, never replace.
+            //
+            // A backend one version behind sends {coin, item, itemPlural} with
+            // no `name`, and replacing the whole object wiped the site's own
+            // name out of the nav. Any field the server does not send keeps its
+            // default instead of becoming undefined on screen.
+            if (h.brand) setBrand((b) => ({ ...b, ...h.brand }));
             if (h.hotDogUsd) setHotDogUsd(h.hotDogUsd);
             if (h.roundMs) setRoundMs(h.roundMs);
             setRound(h.round);
