@@ -1,25 +1,17 @@
 "use client";
 
-import { Wordmark } from "./Logo";
-import { Dot, Pill } from "./ui";
-import type { Connection } from "@/lib/live";
+import { Logo } from "./Logo";
 
-export function Nav({ connection, name }: { connection: Connection; name: string }) {
+/**
+ * The top of the page: the logo, centred, and nothing else.
+ *
+ * No bar, no border, no sticky strip — the logo sits directly on the page
+ * background, so the artwork is the whole masthead.
+ */
+export function Nav() {
   return (
-    <header className="sticky top-0 z-40">
-      {/* the blue strip a warehouse store puts above everything */}
-      <div className="h-1.5 bg-[var(--blue)]" />
-      <div className="border-b border-[var(--line)] bg-white/90 backdrop-blur-xl">
-        <div className="mx-auto flex h-36 w-full max-w-5xl items-center justify-between px-5 sm:px-8">
-          <a href="#top" aria-label={name}>
-            <Wordmark name={name} />
-          </a>
-          <Pill tone={connection === "open" ? "live" : "warn"}>
-            <Dot tone={connection === "open" ? "live" : "warn"} />
-            {connection === "open" ? "live" : connection === "connecting" ? "connecting" : "offline"}
-          </Pill>
-        </div>
-      </div>
+    <header className="flex justify-center px-5 pt-8 sm:px-8">
+      <Logo size={120} maxWidth={540} />
     </header>
   );
 }

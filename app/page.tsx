@@ -12,7 +12,7 @@ export default function Page() {
 
   return (
     <>
-      <Nav connection={s.connection} name={s.brand.name} />
+      <Nav />
       <main className="flex-1">
         <Hero s={s} />
         <Totals s={s} />

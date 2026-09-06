@@ -11,7 +11,7 @@ export function Hero({ s }: { s: LiveState }) {
   const serving = !!s.serving;
 
   return (
-    <Section id="top" className="pb-4 pt-12 text-center sm:pt-16">
+    <Section id="top" className="pb-4 pt-10 text-center sm:pt-14">
       <h1 className="mx-auto max-w-3xl text-balance text-[38px] font-extrabold leading-[1.04] tracking-[-0.035em] sm:text-[62px]">
         Every {every(s.roundMs, true)},
         <br />
