@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { ExternalLink } from "lucide-react";
 import { dogs, num, pct, short, usd } from "@/lib/format";
-import type { CostcoState } from "@/lib/useCostco";
+import type { LiveState } from "@/lib/live";
 import { Addr, Dot, Panel, Pill, Section } from "./ui";
 
 /**
@@ -13,7 +13,7 @@ import { Addr, Dot, Panel, Pill, Section } from "./ui";
  * out, with a link to it. This is the part of the page that is checkable — a
  * counter can be anything, but a transaction hash either exists or it does not.
  */
-export function LiveQueue({ s }: { s: CostcoState }) {
+export function LiveQueue({ s }: { s: LiveState }) {
   const serving = s.serving;
   const result = s.lastResult;
   const rows = s.feed;
@@ -124,7 +124,7 @@ export function LiveQueue({ s }: { s: CostcoState }) {
           </Panel>
 
           {s.lastError && (
-            <Panel className="border-[var(--costco-red)]/25 p-5">
+            <Panel className="border-[var(--brand-red)]/25 p-5">
               <p className="text-[11px] uppercase tracking-[0.16em] text-[#ff8598]">
                 the last round fed nobody
               </p>
@@ -150,7 +150,7 @@ function Row({ k, v }: { k: string; v: React.ReactNode }) {
   );
 }
 
-function Empty({ s }: { s: CostcoState }) {
+function Empty({ s }: { s: LiveState }) {
   return (
     <div className="flex h-[240px] flex-col items-center justify-center gap-3 px-6 text-center">
       <div className="relative">

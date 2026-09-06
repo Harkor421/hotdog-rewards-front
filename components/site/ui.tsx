@@ -43,7 +43,7 @@ export function Pill({
     neutral: "border-white/10 bg-white/[0.03] text-muted",
     live: "border-emerald-400/25 bg-emerald-400/10 text-emerald-300",
     warn: "border-[var(--mustard)]/30 bg-[var(--mustard)]/10 text-[var(--mustard)]",
-    bad: "border-[var(--costco-red)]/35 bg-[var(--costco-red)]/10 text-[#ff8598]",
+    bad: "border-[var(--brand-red)]/35 bg-[var(--brand-red)]/10 text-[#ff8598]",
   };
   return (
     <span
@@ -62,7 +62,7 @@ export function Dot({ tone = "live" }: { tone?: "live" | "warn" | "bad" | "off" 
   const c = {
     live: "bg-emerald-400",
     warn: "bg-[var(--mustard)]",
-    bad: "bg-[var(--costco-red)]",
+    bad: "bg-[var(--brand-red)]",
     off: "bg-white/25",
   }[tone];
   return (

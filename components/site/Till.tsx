@@ -2,7 +2,7 @@
 
 import { BorderBeam } from "@/components/magicui/border-beam";
 import { num, usd } from "@/lib/format";
-import type { CostcoState } from "@/lib/useCostco";
+import type { LiveState } from "@/lib/live";
 import { Addr, Panel, Pill, Section } from "./ui";
 
 /**
@@ -12,7 +12,7 @@ import { Addr, Panel, Pill, Section } from "./ui";
  * worth anything, so it is given the most weight on the page — not the balance,
  * which sounds impressive and says nothing on its own.
  */
-export function Till({ s }: { s: CostcoState }) {
+export function Till({ s }: { s: LiveState }) {
   const p = s.pot;
   const runway = p?.roundsLeft ?? null;
   const hours = runway != null ? (runway * s.roundMs) / 3_600_000 : null;

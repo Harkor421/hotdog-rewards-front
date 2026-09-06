@@ -2,18 +2,18 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type {
-  Hello, LeaderRow, Payment, Pot, Round, RoundRow, ServeResult, ServeStart, Service, Stats, Totals,
+  Brand, Hello, LeaderRow, Payment, Pot, Round, RoundRow, ServeResult, ServeStart, Service, Stats, Totals,
 } from "./types";
 
-const RAW = process.env.NEXT_PUBLIC_BACKEND_URL || "wss://costco-back-production.up.railway.app";
+const RAW = process.env.NEXT_PUBLIC_BACKEND_URL || "wss://hotdog-rewards-back-production.up.railway.app";
 export const WS_URL = RAW.replace(/^http/, "ws").replace(/\/$/, "");
 export const HTTP_URL = RAW.replace(/^ws/, "http").replace(/\/$/, "");
 
 export type Connection = "connecting" | "open" | "closed";
 
-export type CostcoState = {
+export type LiveState = {
   connection: Connection;
-  brand: { coin: string; item: string; itemPlural: string };
+  brand: Brand;
   hotDogUsd: number;
   roundMs: number;
   round: Round | null;
@@ -38,9 +38,14 @@ export type CostcoState = {
 
 const EMPTY: Totals = { hotDogs: 0, usd: 0, rounds: 0, people: 0 };
 
-export function useCostco(): CostcoState {
+export function useLive(): LiveState {
   const [connection, setConnection] = useState<Connection>("connecting");
-  const [brand, setBrand] = useState({ coin: "COSTCO", item: "hot dog", itemPlural: "hot dogs" });
+  const [brand, setBrand] = useState<Brand>({
+    name: "Hotdog Rewards",
+    coin: "HDR",
+    item: "hot dog",
+    itemPlural: "hot dogs",
+  });
   const [hotDogUsd, setHotDogUsd] = useState(1);
   const [roundMs, setRoundMs] = useState(300_000);
   const [round, setRound] = useState<Round | null>(null);

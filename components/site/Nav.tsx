@@ -1,18 +1,27 @@
 "use client";
 
 import { Dot, Pill } from "./ui";
-import type { Connection } from "@/lib/useCostco";
+import type { Connection } from "@/lib/live";
 
-export function Nav({ connection, viewers }: { connection: Connection; viewers: number }) {
+export function Nav({
+  connection,
+  viewers,
+  name,
+}: {
+  connection: Connection;
+  viewers: number;
+  name: string;
+}) {
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[var(--background)]/70 backdrop-blur-xl">
       <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
         <a href="#top" className="flex items-center gap-2.5">
-          <span className="grid size-7 place-items-center rounded-lg bg-[var(--costco-red)] text-[13px] leading-none shadow-[0_6px_18px_-6px_rgba(227,24,55,0.9)]">
+          <span className="grid size-7 place-items-center rounded-lg bg-[var(--brand-red)] text-[13px] leading-none shadow-[0_6px_18px_-6px_rgba(227,24,55,0.9)]">
             🌭
           </span>
           <span className="text-[15px] font-semibold tracking-tight">
-            COSTCO<span className="text-[var(--mustard)]">.</span>
+            {name}
+            <span className="text-[var(--mustard)]">.</span>
           </span>
         </a>
 

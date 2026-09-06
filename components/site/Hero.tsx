@@ -9,10 +9,10 @@ import { Particles } from "@/components/magicui/particles";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { clock, num, short, usd } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import type { CostcoState } from "@/lib/useCostco";
+import type { LiveState } from "@/lib/live";
 import { Dot, Pill } from "./ui";
 
-export function Hero({ s }: { s: CostcoState }) {
+export function Hero({ s }: { s: LiveState }) {
   const progress = s.round ? 1 - s.msLeft / s.round.lengthMs : 0;
   const serving = !!s.serving;
 
@@ -23,7 +23,7 @@ export function Hero({ s }: { s: CostcoState }) {
 
       <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center px-5 pb-6 pt-14 text-center sm:px-8 sm:pt-20">
         <div className="mb-6 inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-1 py-1 pr-3.5 backdrop-blur">
-          <span className="mr-2.5 rounded-full bg-[var(--costco-red)] px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-white">
+          <span className="mr-2.5 rounded-full bg-[var(--brand-red)] px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-white">
             $1.50 is a lie
           </span>
           <AnimatedShinyText className="text-[13px]">
@@ -50,7 +50,7 @@ export function Hero({ s }: { s: CostcoState }) {
           <div
             className={cn(
               "pointer-events-none absolute left-1/2 top-1/2 size-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl transition-opacity duration-700 sm:size-[420px]",
-              serving ? "bg-[var(--mustard)]/25 opacity-100" : "bg-[var(--costco-red)]/18 opacity-80"
+              serving ? "bg-[var(--mustard)]/25 opacity-100" : "bg-[var(--brand-red)]/18 opacity-80"
             )}
           />
           <HotDogStage bell={s.bell} className="absolute inset-0" />
@@ -117,7 +117,7 @@ function Countdown({
 
       <div className="mt-4 h-[3px] w-full overflow-hidden rounded-full bg-white/[0.07]">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-[var(--costco-red)] to-[var(--mustard)] transition-[width] duration-200 ease-linear"
+          className="h-full rounded-full bg-gradient-to-r from-[var(--brand-red)] to-[var(--mustard)] transition-[width] duration-200 ease-linear"
           style={{ width: `${Math.min(100, Math.max(0, progress * 100))}%` }}
         />
       </div>
@@ -125,7 +125,7 @@ function Countdown({
   );
 }
 
-function Contract({ s }: { s: CostcoState }) {
+function Contract({ s }: { s: LiveState }) {
   const [copied, setCopied] = useState(false);
   const token = s.service?.token;
 

@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 /* ===========================================================================
-   COSTCO — the counter at the back of the warehouse.
-   Costco red and mustard yellow on near-black, so the one thing that is lit
+   Hotdog Rewards — the counter at the back of the warehouse.
+   Ketchup red and mustard yellow on near-black, so the one thing that is lit
    is the hot dog. Everything else gets out of its way.
    =========================================================================== */
 
@@ -17,8 +17,8 @@
   --muted: #83838f;
   --muted-2: #5b5b66;
 
-  --costco-red: #e31837;
-  --costco-blue: #0060a9;
+  --brand-red: #e31837;
+  --brand-blue: #0060a9;
   --mustard: #f7b500;
   --ketchup: #c8102e;
   --bun: #e0a96d;
@@ -32,8 +32,8 @@
   --color-panel-2: var(--panel-2);
   --color-line: var(--line);
   --color-muted: var(--muted);
-  --color-red: var(--costco-red);
-  --color-blue: var(--costco-blue);
+  --color-red: var(--brand-red);
+  --color-blue: var(--brand-blue);
   --color-mustard: var(--mustard);
   --color-ketchup: var(--ketchup);
   --color-bun: var(--bun);
@@ -109,7 +109,7 @@
     background-attachment: fixed;
   }
   ::selection {
-    background: var(--costco-red);
+    background: var(--brand-red);
     color: #fff;
   }
 }

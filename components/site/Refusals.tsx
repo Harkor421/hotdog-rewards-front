@@ -40,7 +40,7 @@ export function Refusals() {
         {REFUSALS.map((r) => (
           <Panel key={r.when} className="p-5">
             <p className="text-[14px] font-medium leading-snug">
-              <span className="mr-2 text-[var(--costco-red)]">✕</span>
+              <span className="mr-2 text-[var(--brand-red)]">✕</span>
               {r.when}
             </p>
             <p className="mt-2 text-[13px] leading-relaxed text-muted">{r.why}</p>

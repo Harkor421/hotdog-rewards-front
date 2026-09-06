@@ -10,14 +10,14 @@ import { LiveQueue } from "@/components/site/LiveQueue";
 import { Nav } from "@/components/site/Nav";
 import { Refusals, Ticker } from "@/components/site/Refusals";
 import { Till } from "@/components/site/Till";
-import { useCostco } from "@/lib/useCostco";
+import { useLive } from "@/lib/live";
 
 export default function Page() {
-  const s = useCostco();
+  const s = useLive();
 
   return (
     <>
-      <Nav connection={s.connection} viewers={s.viewers} />
+      <Nav connection={s.connection} viewers={s.viewers} name={s.brand.name} />
       <main className="flex-1">
         <Hero s={s} />
         <Ticker item={s.brand.item} />

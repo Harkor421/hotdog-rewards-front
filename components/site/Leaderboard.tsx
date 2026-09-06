@@ -1,10 +1,10 @@
 "use client";
 
 import { ago, dogs, num, pct, short, usd } from "@/lib/format";
-import type { CostcoState } from "@/lib/useCostco";
+import type { LiveState } from "@/lib/live";
 import { Addr, Panel, Pill, Section } from "./ui";
 
-export function Leaderboard({ s }: { s: CostcoState }) {
+export function Leaderboard({ s }: { s: LiveState }) {
   const rows = s.leaderboard;
   const explorer = s.service?.explorer;
 
@@ -67,7 +67,7 @@ export function Leaderboard({ s }: { s: CostcoState }) {
   );
 }
 
-export function Rounds({ s }: { s: CostcoState }) {
+export function Rounds({ s }: { s: LiveState }) {
   const rows = s.rounds;
 
   return (

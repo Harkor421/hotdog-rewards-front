@@ -3,10 +3,10 @@
 import { Ban, Coins, ScanSearch, Timer } from "lucide-react";
 import { MagicCard } from "@/components/magicui/magic-card";
 import { num, pct, usd } from "@/lib/format";
-import type { CostcoState } from "@/lib/useCostco";
+import type { LiveState } from "@/lib/live";
 import { Panel, Section } from "./ui";
 
-export function HowItWorks({ s }: { s: CostcoState }) {
+export function HowItWorks({ s }: { s: LiveState }) {
   const steps = [
     {
       icon: Timer,
