@@ -150,12 +150,3 @@ function PlaceholderBadge({
   );
 }
 
-/** The nav lockup: the logo slot, then the name as text. */
-export function Wordmark({ name }: { name: string }) {
-  return (
-    <span className="flex items-center gap-2.5">
-      <Logo size={120} maxWidth={540} />
-      <span className="text-[15.5px] font-bold tracking-[-0.02em] text-[var(--blue)]">{name}</span>
-    </span>
-  );
-}
