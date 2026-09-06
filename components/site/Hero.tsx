@@ -21,7 +21,7 @@ export function Hero({ s }: { s: LiveState }) {
       <p className="mx-auto mt-5 max-w-xl text-pretty text-[16px] leading-relaxed text-muted sm:text-[18px]">
         Hold <span className="font-semibold text-[var(--blue)]">${s.brand.coin}</span> and we send you{" "}
         <span className="font-semibold text-[var(--foreground)]">{usd(s.hotDogUsd)}</span> every{" "}
-        {every(s.roundMs)} — what a Costco hot dog costs.
+        {every(s.roundMs)}. That is one hot dog, for everybody in the queue.
       </p>
 
       <div className="relative mt-2 h-[280px] w-full sm:h-[360px] lg:h-[420px]">
@@ -76,8 +76,8 @@ function Contract({ s }: { s: LiveState }) {
       ) : (
         <Pill tone="warn">contract not published yet</Pill>
       )}
-      {s.service?.demo && <Pill tone="warn">demo — no real coin configured</Pill>}
-      {s.service?.dryRun && !s.service?.demo && <Pill tone="warn">dry run — nothing has moved</Pill>}
+      {s.service?.demo && <Pill tone="warn">demo queue, no real coin configured</Pill>}
+      {s.service?.dryRun && !s.service?.demo && <Pill tone="warn">dry run, nothing has moved</Pill>}
     </div>
   );
 }

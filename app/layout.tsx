@@ -7,9 +7,9 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 
 // The interval is a runtime value the backend owns, so the static title does
 // not name one — it would go stale the moment ROUND_MS changes.
-const title = "Hotdog Rewards — a hot dog for every $HDR holder";
+const title = "Hotdog Rewards";
 const description =
-  "Hold $HDR and the treasury sends you $1.50 — what a Costco hot dog costs — every round, with a transaction hash for each one.";
+  "Hold $HDR and the treasury sends you $1.50 every round. One hot dog each, with a transaction hash for every one of them.";
 
 export const metadata: Metadata = {
   title,

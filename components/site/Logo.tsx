@@ -1,30 +1,89 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
+
 /**
- * The badge.
+ * The logo slot.
  *
- * Drawn here rather than shipped as an image so it stays sharp at 28px in the
- * nav and at 200px in the hero, and so the wordmark is real text rather than
- * pixels — it is the site's name, and it should be selectable and searchable.
+ * Renders `public/logo.png` if that file exists, and draws a placeholder badge
+ * if it does not. The fallback is a runtime `onError` rather than a build-time
+ * check on purpose: the artwork gets dropped in without touching the code, and
+ * the page never shows a broken-image icon while the slot is empty.
  *
- * The round-badge-with-a-price format is the food-court sign it is riffing on;
- * the name, the drawing and the type are this project's own.
+ * The slot is sized by HEIGHT and lets width follow the artwork, so a round
+ * badge and a wide lockup both sit correctly without being cropped or squashed.
  */
 export function Logo({
   size = 40,
+  maxWidth = 200,
   compact = false,
   className,
 }: {
   size?: number;
-  /**
-   * Ring and dog only.
-   *
-   * The full badge carries three lines of type. At the 34px it occupies in the
-   * nav none of them resolve — they render as three grey smudges, which reads
-   * as a broken image rather than as a logo. Below ~64px the drawing has to
-   * carry it alone.
-   */
+  maxWidth?: number;
   compact?: boolean;
   className?: string;
 }) {
+  const [src, setSrc] = useState<string | null>(null);
+
+  /**
+   * Load the file first, show it second.
+   *
+   * The obvious version renders <img src="/logo.png" onError={fallback}> — and
+   * it does not work, because the element is server-rendered: the browser tries
+   * the URL and fails before React hydrates, so the error event is long gone by
+   * the time an onError handler exists. What you get is the broken-image icon
+   * and the alt text sitting in the nav.
+   *
+   * Preloading inverts it. The drawn badge is what renders until a real file is
+   * known to be there, so an empty slot looks deliberate rather than broken,
+   * and there is no flash of a missing image on the way.
+   */
+  useEffect(() => {
+    const img = new window.Image();
+    img.onload = () => setSrc("/logo.png");
+    img.src = "/logo.png";
+    return () => {
+      img.onload = null;
+    };
+  }, []);
+
+  if (src) {
+    return (
+      // next/image is deliberately not used: this file may legitimately not
+      // exist, and the point of the slot is that dropping it in needs no build.
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={src}
+        alt="Hotdog Rewards"
+        className={cn("block w-auto object-contain", className)}
+        style={{ height: size, maxWidth }}
+      />
+    );
+  }
+
+  return <PlaceholderBadge size={size} compact={compact} className={className} />;
+}
+
+/**
+ * What stands in until there is a logo.png.
+ *
+ * Drawn rather than shipped as an image so it is sharp at any size, and so the
+ * name is real text. Below ~64px it drops to ring-and-dog: three lines of type
+ * at 40px render as three grey smudges, which reads as a broken image rather
+ * than as a logo.
+ */
+function PlaceholderBadge({
+  size,
+  compact,
+  className,
+}: {
+  size: number;
+  compact: boolean;
+  className?: string;
+}) {
+  const small = compact || size < 64;
   return (
     <svg
       viewBox="0 0 200 200"
@@ -35,29 +94,29 @@ export function Logo({
       aria-label="Hotdog Rewards"
     >
       <circle cx="100" cy="100" r="96" fill="#fff" />
-      <circle cx="100" cy="100" r="92" fill="none" stroke="var(--blue)" strokeWidth={compact ? 11 : 7} />
+      <circle cx="100" cy="100" r="92" fill="none" stroke="var(--blue)" strokeWidth={small ? 11 : 7} />
 
-      {!compact && (
+      {!small && (
         <>
-      <text
-        x="100" y="50" textAnchor="middle" fill="var(--red)"
-        fontFamily="var(--font-geist-sans), system-ui, sans-serif"
-        fontSize="31" fontWeight="800" letterSpacing="-1.2"
-      >
-        HOTDOG
-      </text>
-      <text
-        x="100" y="68" textAnchor="middle" fill="var(--blue)"
-        fontFamily="var(--font-geist-sans), system-ui, sans-serif"
-        fontSize="15" fontWeight="800" letterSpacing="3.4"
-      >
-        REWARDS
-      </text>
+          <text
+            x="100" y="50" textAnchor="middle" fill="var(--red)"
+            fontFamily="var(--font-geist-sans), system-ui, sans-serif"
+            fontSize="31" fontWeight="800" letterSpacing="-1.2"
+          >
+            HOTDOG
+          </text>
+          <text
+            x="100" y="68" textAnchor="middle" fill="var(--blue)"
+            fontFamily="var(--font-geist-sans), system-ui, sans-serif"
+            fontSize="15" fontWeight="800" letterSpacing="3.4"
+          >
+            REWARDS
+          </text>
         </>
       )}
 
       {/* the dog — tilted, because a level one looks like a diagram */}
-      <g transform={compact ? "translate(100 100) rotate(-16) scale(1.22)" : "translate(100 108) rotate(-7)"}>
+      <g transform={small ? "translate(100 100) rotate(-16) scale(1.22)" : "translate(100 108) rotate(-7)"}>
         <rect x="-68" y="2" width="136" height="26" rx="13" fill="#e2a45f" />
         <rect x="-68" y="2" width="136" height="26" rx="13" fill="none" stroke="#c98c46" strokeWidth="1.5" />
         <rect x="-72" y="-13" width="144" height="24" rx="12" fill="#c0392b" />
@@ -74,7 +133,7 @@ export function Logo({
         />
       </g>
 
-      {!compact && (
+      {!small && (
         <>
           <path d="M22 158 q22 -9 46 -4" fill="none" stroke="var(--red)" strokeWidth="7" strokeLinecap="round" />
           <path d="M178 158 q-22 -9 -46 -4" fill="none" stroke="var(--red)" strokeWidth="7" strokeLinecap="round" />
@@ -91,14 +150,12 @@ export function Logo({
   );
 }
 
-/** The nav lockup: the badge, then the name as text. */
+/** The nav lockup: the logo slot, then the name as text. */
 export function Wordmark({ name }: { name: string }) {
   return (
     <span className="flex items-center gap-2.5">
-      <Logo size={36} compact />
-      <span className="text-[15.5px] font-bold tracking-[-0.02em] text-[var(--blue)]">
-        {name}
-      </span>
+      <Logo size={40} maxWidth={180} />
+      <span className="text-[15.5px] font-bold tracking-[-0.02em] text-[var(--blue)]">{name}</span>
     </span>
   );
 }
