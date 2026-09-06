@@ -154,7 +154,7 @@ function PlaceholderBadge({
 export function Wordmark({ name }: { name: string }) {
   return (
     <span className="flex items-center gap-2.5">
-      <Logo size={40} maxWidth={180} />
+      <Logo size={120} maxWidth={540} />
       <span className="text-[15.5px] font-bold tracking-[-0.02em] text-[var(--blue)]">{name}</span>
     </span>
   );

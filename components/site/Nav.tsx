@@ -10,7 +10,7 @@ export function Nav({ connection, name }: { connection: Connection; name: string
       {/* the blue strip a warehouse store puts above everything */}
       <div className="h-1.5 bg-[var(--blue)]" />
       <div className="border-b border-[var(--line)] bg-white/90 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-5 sm:px-8">
+        <div className="mx-auto flex h-36 w-full max-w-5xl items-center justify-between px-5 sm:px-8">
           <a href="#top" aria-label={name}>
             <Wordmark name={name} />
           </a>
