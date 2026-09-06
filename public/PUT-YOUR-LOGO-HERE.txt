@@ -5,11 +5,11 @@ at whatever aspect ratio it has, and the drawn placeholder badge disappears.
 
   public/logo.png
 
-Square or round artwork fits the slot best (it is rendered at 40px in the nav
-and 60px in the footer, scaled to fit, never cropped). A wide lockup works too:
-it will be limited to 200px across in the nav rather than squashed.
+Square or round artwork fits the slot best (it is rendered at 120px in the nav
+and 180px in the footer, scaled to fit, never cropped). A wide lockup works too:
+it will be limited to 540px across in the nav rather than squashed.
 
-Export at 3x the display size — 180px square is plenty — and keep the
+Export at 3x the display size — 540px square is plenty — and keep the
 background transparent, because the page behind it is white.
 
 Until the file exists, the site draws its own badge instead. Nothing breaks
