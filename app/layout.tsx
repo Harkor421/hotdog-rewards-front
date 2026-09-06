@@ -5,9 +5,11 @@ import "./globals.css";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
-const title = "Hotdog Rewards — a hot dog every five minutes";
+// The interval is a runtime value the backend owns, so the static title does
+// not name one — it would go stale the moment ROUND_MS changes.
+const title = "Hotdog Rewards — a hot dog for every $HDR holder";
 const description =
-  "Every five minutes the treasury pays $1 — one hot dog — to every wallet holding $HDR. The same dollar for everyone, with a transaction hash for each one.";
+  "Hold $HDR and the treasury sends you $1.50 — what a Costco hot dog costs — every round, with a transaction hash for each one.";
 
 export const metadata: Metadata = {
   title,
@@ -22,8 +24,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#08080a",
-  colorScheme: "dark",
+  themeColor: "#ffffff",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
