@@ -1,7 +1,11 @@
 # 🌭 Hotdog Rewards — Frontend
 
-The page for [`hotdog-rewards-back`](https://github.com/Harkor421/hotdog-rewards-back): a countdown,
-a hot dog, and every dollar the treasury has ever handed out.
+The page for [`hotdog-rewards-back`](https://github.com/Harkor421/hotdog-rewards-back).
+
+Four things, and nothing else: **a countdown**, **the hot dog**, **how many have
+been handed out**, and **who got one**. Every explanation of how the machinery
+works lives in the backend's README, where somebody looking for it will go —
+not on the page, where it was in the way of the only two numbers that matter.
 
 **Next.js 16 · React 19 · Tailwind v4 · Magic UI · Three.js**
 
@@ -49,19 +53,23 @@ holds the whole thing, and two details in it are load-bearing:
   doing its one job. When the authoritative totals land, the optimistic ones are
   dropped rather than added to.
 
+## The interval is not hard-coded
+
+The backend owns `ROUND_MS`, so nothing here spells out an interval: the
+headline, the sentence under it and the countdown all read it off the wire and
+say "five seconds" or "five minutes" accordingly. The countdown even changes
+units — `m:ss` is right for a five-minute round and absurd for a five-second
+one, where three of its four characters say nothing.
+
+The same goes for the price and the ticker. A rename or a repricing is a Railway
+variable, not a deploy of this side.
+
 ## Honesty on screen
 
-The backend can only count what it has seen since it last booted when no database
-is attached, so `/stats` says `source: "since-boot"` and **the page prints that**
-under the counter. A total that quietly reset on a deploy would be the page lying
-about the only thing anybody came here to check. The same goes for:
-
-- a treasury that is *unset* versus one that is *empty* — very different things,
-  never shown the same way;
-- a round where the brake bit, which says **"0.50 hot dogs each"** rather than
-  rounding up to one;
-- rounds that fed nobody, listed with the reason they refused;
-- a demo queue, labelled as a demo everywhere it appears.
+With no database attached the backend can only count what it has seen since it
+last booted, so `/stats` says `source: "since-boot"` — and a demo queue is
+labelled a demo everywhere it appears. A total that quietly reset on a deploy
+would be the page lying about the only thing anybody came here to check.
 
 ## Run it
 

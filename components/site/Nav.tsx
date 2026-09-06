@@ -1,42 +1,24 @@
 "use client";
 
+import { Wordmark } from "./Logo";
 import { Dot, Pill } from "./ui";
 import type { Connection } from "@/lib/live";
 
-export function Nav({
-  connection,
-  viewers,
-  name,
-}: {
-  connection: Connection;
-  viewers: number;
-  name: string;
-}) {
+export function Nav({ connection, name }: { connection: Connection; name: string }) {
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[var(--background)]/70 backdrop-blur-xl">
-      <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
-        <a href="#top" className="flex items-center gap-2.5">
-          <span className="grid size-7 place-items-center rounded-lg bg-[var(--brand-red)] text-[13px] leading-none shadow-[0_6px_18px_-6px_rgba(227,24,55,0.9)]">
-            🌭
-          </span>
-          <span className="text-[15px] font-semibold tracking-tight">
-            {name}
-            <span className="text-[var(--mustard)]">.</span>
-          </span>
-        </a>
-
-        <nav className="hidden items-center gap-7 text-[13.5px] text-muted md:flex">
-          <a className="transition-colors hover:text-white" href="#counter">The counter</a>
-          <a className="transition-colors hover:text-white" href="#how">How it works</a>
-          <a className="transition-colors hover:text-white" href="#till">The till</a>
-          <a className="transition-colors hover:text-white" href="#queue">Who ate</a>
-          <a className="transition-colors hover:text-white" href="#rounds">Every round</a>
-        </nav>
-
-        <Pill tone={connection === "open" ? "live" : connection === "connecting" ? "warn" : "bad"}>
-          <Dot tone={connection === "open" ? "live" : connection === "connecting" ? "warn" : "bad"} />
-          {connection === "open" ? `live · ${viewers} watching` : connection === "connecting" ? "connecting" : "offline"}
-        </Pill>
+    <header className="sticky top-0 z-40">
+      {/* the blue strip a warehouse store puts above everything */}
+      <div className="h-1.5 bg-[var(--blue)]" />
+      <div className="border-b border-[var(--line)] bg-white/90 backdrop-blur-xl">
+        <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-5 sm:px-8">
+          <a href="#top" aria-label={name}>
+            <Wordmark name={name} />
+          </a>
+          <Pill tone={connection === "open" ? "live" : "warn"}>
+            <Dot tone={connection === "open" ? "live" : "warn"} />
+            {connection === "open" ? "live" : connection === "connecting" ? "connecting" : "offline"}
+          </Pill>
+        </div>
       </div>
     </header>
   );

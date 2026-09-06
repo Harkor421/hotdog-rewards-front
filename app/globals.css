@@ -1,65 +1,51 @@
 @import "tailwindcss";
 
 /* ===========================================================================
-   Hotdog Rewards — the counter at the back of the warehouse.
-   Ketchup red and mustard yellow on near-black, so the one thing that is lit
-   is the hot dog. Everything else gets out of its way.
+   Hotdog Rewards — the food court, not the warehouse.
+   White, warehouse blue and a red accent. Everything on the page is bright
+   and square except the hot dog, which is the only thing allowed to be warm.
    =========================================================================== */
 
 :root {
-  --background: #08080a;
-  --foreground: #f4f2ef;
+  --background: #ffffff;
+  --surface: #f4f6f9;
+  --foreground: #0e1219;
 
-  --panel: #0f0f13;
-  --panel-2: #16161c;
-  --line: rgba(255, 255, 255, 0.07);
-  --line-strong: rgba(255, 255, 255, 0.14);
-  --muted: #83838f;
-  --muted-2: #5b5b66;
+  --line: #dfe4ec;
+  --line-strong: #c6cedb;
+  --muted: #5b6675;
+  --muted-2: #8c96a5;
 
-  --brand-red: #e31837;
-  --brand-blue: #0060a9;
-  --mustard: #f7b500;
-  --ketchup: #c8102e;
+  --blue: #0a5cae;
+  --blue-deep: #063f7a;
+  --red: #e01a32;
+  --mustard: #f0b400;
   --bun: #e0a96d;
-  --relish: #6f9f3f;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
-  --color-panel: var(--panel);
-  --color-panel-2: var(--panel-2);
   --color-line: var(--line);
   --color-muted: var(--muted);
-  --color-red: var(--brand-red);
-  --color-blue: var(--brand-blue);
+  --color-blue: var(--blue);
+  --color-red: var(--red);
   --color-mustard: var(--mustard);
-  --color-ketchup: var(--ketchup);
-  --color-bun: var(--bun);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Magic UI animations */
   --animate-marquee: marquee var(--duration, 40s) linear infinite;
-  --animate-marquee-vertical: marquee-vertical var(--duration, 40s) linear infinite;
   --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
   --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
-  --animate-shiny-text: shiny-text 8s infinite;
   --animate-border-beam: border-beam calc(var(--duration) * 1s) infinite linear;
-  --animate-steam: steam 3.6s ease-out infinite;
-  --animate-bell: bell 0.9s cubic-bezier(0.22, 1, 0.36, 1);
   --animate-pulse-ring: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(calc(-100% - var(--gap))); }
-}
-@keyframes marquee-vertical {
-  from { transform: translateY(0); }
-  to { transform: translateY(calc(-100% - var(--gap))); }
 }
 @keyframes shimmer-slide {
   to { transform: translate(calc(100cqw - 100%), 0); }
@@ -70,31 +56,19 @@
   65%, 85% { transform: translateZ(0) rotate(270deg); }
   100% { transform: translateZ(0) rotate(360deg); }
 }
-@keyframes shiny-text {
-  0%, 90%, 100% { background-position: calc(-100% - var(--shiny-width)) 0; }
-  30%, 60% { background-position: calc(100% + var(--shiny-width)) 0; }
-}
 @keyframes border-beam {
   to { offset-distance: 100%; }
 }
-@keyframes steam {
-  0% { opacity: 0; transform: translateY(0) scaleX(1); }
-  18% { opacity: 0.45; }
-  100% { opacity: 0; transform: translateY(-42px) scaleX(1.9); }
-}
-@keyframes bell {
-  0% { transform: scale(1); }
-  35% { transform: scale(1.06); }
-  100% { transform: scale(1); }
-}
 @keyframes pulse-ring {
-  0% { transform: scale(0.85); opacity: 0.65; }
+  0% { transform: scale(0.85); opacity: 0.5; }
   70%, 100% { transform: scale(1.9); opacity: 0; }
 }
 
 @layer base {
   html {
-    color-scheme: dark;
+    /* The page commits to light. Telling the browser so stops it painting a
+       dark form control or scrollbar into the middle of a white page. */
+    color-scheme: light;
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
   }
@@ -102,34 +76,28 @@
     background: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-    /* A faint warm glow behind the counter, so the page is not a flat void. */
-    background-image:
-      radial-gradient(900px 520px at 50% -8%, rgba(227, 24, 55, 0.16), transparent 62%),
-      radial-gradient(700px 420px at 88% 8%, rgba(247, 181, 0, 0.08), transparent 58%);
-    background-attachment: fixed;
   }
   ::selection {
-    background: var(--brand-red);
+    background: var(--blue);
     color: #fff;
   }
 }
 
 @layer utilities {
-  /* Numbers in a table must not jitter as they count. */
+  /* Numbers must not jitter as they count. */
   .tnum { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
-  .panel {
-    background: linear-gradient(180deg, var(--panel-2), var(--panel));
-    border: 1px solid var(--line);
-  }
-  .hairline { border-color: var(--line); }
   .text-muted { color: var(--muted); }
   .text-muted-2 { color: var(--muted-2); }
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(14, 18, 25, 0.04);
+  }
 }
 
-/* Firefox / WebKit scrollbars inside the live panels. */
-.scroll-thin { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.16) transparent; }
-.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
-.scroll-thin::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.16); border-radius: 999px; }
+.scroll-thin { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+.scroll-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 999px; }
 .scroll-thin::-webkit-scrollbar-track { background: transparent; }
 
 @media (prefers-reduced-motion: reduce) {

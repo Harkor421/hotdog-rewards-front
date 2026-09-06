@@ -37,22 +37,24 @@ export default function HotDogScene({ bell = 0, className }: { bell?: number; cl
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={0.35} />
+          {/* Brighter fill than a dark page needs: on white, a moody key light
+              makes the bun read as grey plastic against the paper around it. */}
+          <ambientLight intensity={0.85} />
           <directionalLight
             position={[3.2, 5, 2.4]}
-            intensity={2.6}
-            color="#fff2d8"
+            intensity={2.2}
+            color="#fff6e6"
             castShadow
             shadow-mapSize={[1024, 1024]}
             shadow-bias={-0.0004}
           />
-          <directionalLight position={[-4, 1.5, -2]} intensity={0.9} color="#ff5a6a" />
-          <pointLight position={[0, -1.6, 1.4]} intensity={2.2} color="#ffb35c" distance={6} />
+          <directionalLight position={[-4, 1.5, -2]} intensity={0.7} color="#ffd9c2" />
+          <pointLight position={[0, -1.6, 1.4]} intensity={1.4} color="#ffd9a3" distance={6} />
 
           <Environment resolution={256}>
             <Lightformer intensity={3.2} position={[0, 3.4, 2]} scale={[7, 5, 1]} color="#fff4de" />
-            <Lightformer intensity={1.8} position={[-4.5, 1, -1.5]} scale={[4, 4, 1]} color="#ff5f4a" />
-            <Lightformer intensity={1.4} position={[4.5, 0.4, -2.5]} scale={[4, 4, 1]} color="#63a7ff" />
+            <Lightformer intensity={1.5} position={[-4.5, 1, -1.5]} scale={[4, 4, 1]} color="#ffe9dc" />
+            <Lightformer intensity={1.2} position={[4.5, 0.4, -2.5]} scale={[4, 4, 1]} color="#dceaff" />
             <Lightformer intensity={1.1} position={[0, -3, 1]} scale={[6, 3, 1]} color="#ffcf8a" />
           </Environment>
 
@@ -62,12 +64,12 @@ export default function HotDogScene({ bell = 0, className }: { bell?: number; cl
             </Fit>
             <ContactShadows
               position={[0, -0.78, 0]}
-              opacity={0.55}
+              opacity={0.32}
               scale={6}
-              blur={2.6}
+              blur={2.8}
               far={2.2}
               resolution={512}
-              color="#2a0a0e"
+              color="#5a3b22"
             />
           </group>
 
@@ -77,6 +79,7 @@ export default function HotDogScene({ bell = 0, className }: { bell?: number; cl
             enablePan={false}
             // Let people turn it over, but never let them get under the floor
             // or look straight down the barrel — both look broken.
+            target={[0, -0.16, 0]}
             minPolarAngle={Math.PI / 3.4}
             maxPolarAngle={Math.PI / 1.85}
             rotateSpeed={0.5}

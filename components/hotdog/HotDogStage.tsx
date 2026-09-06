@@ -12,8 +12,8 @@ const HotDogScene = dynamic(() => import("./HotDogScene"), {
   loading: () => (
     <div className="flex h-full w-full items-center justify-center">
       <div className="relative">
-        <div className="absolute inset-0 animate-pulse-ring rounded-full bg-[var(--mustard)]/20" />
-        <div className="relative grid size-16 place-items-center rounded-full border border-white/10 bg-white/[0.03] text-2xl">
+        <div className="absolute inset-0 animate-pulse-ring rounded-full bg-[var(--mustard)]/30" />
+        <div className="relative grid size-16 place-items-center rounded-full border border-[var(--line)] bg-white text-2xl">
           🌭
         </div>
       </div>

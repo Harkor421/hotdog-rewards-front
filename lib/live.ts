@@ -153,7 +153,7 @@ export function useLive(): LiveState {
             // empty list reads as "this does not work", not as "wait".
             if (h.lastRound?.items?.length) {
               setLastResult(h.lastRound);
-              setFeed((f) => (f.length ? f : [...h.lastRound!.items!].reverse().slice(0, 120)));
+              setFeed((f) => (f.length ? f : [...h.lastRound!.items!].reverse().slice(0, 60)));
             }
             // Without a database the server's own since-boot tally is the only
             // record there is, so seed from it rather than showing zeroes.
@@ -185,14 +185,21 @@ export function useLive(): LiveState {
           case "serveStart": {
             setLastError(null);
             setServing(m as unknown as ServeStart);
-            setFeed([]);
+            // The feed is deliberately NOT cleared here.
+            //
+            // It used to reset every round, which was fine at five minutes and
+            // is unusable at five seconds: the list was wiped and refilled
+            // faster than its own enter animation could finish, so it sat
+            // permanently blank while claiming forty rows. A rolling log of the
+            // most recent transfers is both steadier and more honest — every
+            // row is still one transfer that was actually broadcast.
             break;
           }
           case "servePayment": {
             const p = m as unknown as Payment;
-            // Newest first, and bounded: this list is a window on the queue,
-            // not a ledger. The ledger is /recent and the receipt book.
-            setFeed((f) => [p, ...f].slice(0, 120));
+            // Newest first, and bounded: this is a window on the last few
+            // rounds, not a ledger. The ledger is /recent and the receipt book.
+            setFeed((f) => [p, ...f].slice(0, 60));
             break;
           }
           case "serveResult": {

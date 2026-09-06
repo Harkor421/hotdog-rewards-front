@@ -26,6 +26,18 @@ export function clock(ms: number) {
   return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`;
 }
 
+/**
+ * The countdown, in the units the round is actually measured in.
+ *
+ * m:ss is right for a five-minute round and absurd for a five-second one —
+ * "0:04" spends three of its four characters saying nothing. Under a minute,
+ * count seconds.
+ */
+export function countdown(ms: number, roundMs: number) {
+  if (roundMs >= 60_000) return clock(ms);
+  return `${Math.max(0, Math.ceil(ms / 1000))}s`;
+}
+
 export function ago(ts: number | null | undefined) {
   if (!ts) return "—";
   const s = Math.max(0, Math.floor((Date.now() - ts) / 1000));
@@ -45,4 +57,20 @@ export function dogs(n: number | null | undefined) {
   if (n == null) return "—";
   if (n >= 1) return n.toLocaleString("en-US", { maximumFractionDigits: n % 1 === 0 ? 0 : 2 });
   return n.toFixed(2);
+}
+
+const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+
+/**
+ * The payout interval, said the way a person says it.
+ *
+ * The backend owns the number, so this has to read correctly whether a round is
+ * five seconds or five minutes — the headline cannot hard-code either, or the
+ * page starts lying the moment ROUND_MS is changed.
+ */
+export function every(ms: number, spelled = false) {
+  const seconds = Math.round(ms / 1000);
+  const [n, unit] = seconds % 60 === 0 && seconds >= 60 ? [seconds / 60, "minute"] : [seconds, "second"];
+  const label = spelled && n <= 10 ? WORDS[n] : String(n);
+  return `${label} ${unit}${n === 1 ? "" : "s"}`;
 }
