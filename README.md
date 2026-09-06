@@ -1,6 +1,6 @@
-# 🌭 COSTCO — Frontend
+# 🌭 Hotdog Rewards — Frontend
 
-The page for [`costco-back`](https://github.com/Harkor421/costco-back): a countdown,
+The page for [`hotdog-rewards-back`](https://github.com/Harkor421/hotdog-rewards-back): a countdown,
 a hot dog, and every dollar the treasury has ever handed out.
 
 **Next.js 16 · React 19 · Tailwind v4 · Magic UI · Three.js**
@@ -37,7 +37,7 @@ It pops when a round is served, and you can drag it.
 
 ## Live state
 
-One WebSocket carries everything; REST fills in the history. `lib/useCostco.ts`
+One WebSocket carries everything; REST fills in the history. `lib/live.ts`
 holds the whole thing, and two details in it are load-bearing:
 
 - **The countdown runs through a clock offset, not a local timer.** Every message
@@ -72,7 +72,7 @@ npm run dev
 ```
 
 ```
-NEXT_PUBLIC_BACKEND_URL=wss://costco-back-production.up.railway.app
+NEXT_PUBLIC_BACKEND_URL=wss://hotdog-rewards-back-production.up.railway.app
 ```
 
 The client derives the `https://` origin from that same value, so there is one URL

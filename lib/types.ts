@@ -9,7 +9,11 @@ export type Round = {
   label: string;
 };
 
-export type Brand = { coin: string; item: string; itemPlural: string };
+/**
+ * `name` is the product, `coin` is the ticker, and they are not the same
+ * string — "holding $Hotdog Rewards" is what happens when they get collapsed.
+ */
+export type Brand = { name: string; coin: string; item: string; itemPlural: string };
 
 export type Service = {
   enabled: boolean;

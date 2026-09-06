@@ -3,7 +3,7 @@
 import { BorderBeam } from "@/components/magicui/border-beam";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { num, usd } from "@/lib/format";
-import type { CostcoState } from "@/lib/useCostco";
+import type { LiveState } from "@/lib/live";
 import { Panel, Pill, Section } from "./ui";
 
 /**
@@ -14,7 +14,7 @@ import { Panel, Pill, Section } from "./ui";
  * that quietly reset on a deploy would be the page lying about the one thing
  * anybody came here to check.
  */
-export function Counter({ s }: { s: CostcoState }) {
+export function Counter({ s }: { s: LiveState }) {
   const st = s.stats;
   const sinceBoot = st?.source === "since-boot";
 

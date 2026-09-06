@@ -5,15 +5,15 @@ import "./globals.css";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
-const title = "COSTCO — a hot dog every five minutes";
+const title = "Hotdog Rewards — a hot dog every five minutes";
 const description =
-  "Every five minutes the treasury pays $1 — one hot dog — to every wallet holding $COSTCO. The same dollar for everyone, with a transaction hash for each one.";
+  "Every five minutes the treasury pays $1 — one hot dog — to every wallet holding $HDR. The same dollar for everyone, with a transaction hash for each one.";
 
 export const metadata: Metadata = {
   title,
   description,
-  applicationName: "COSTCO",
-  openGraph: { title, description, type: "website", siteName: "COSTCO" },
+  applicationName: "Hotdog Rewards",
+  openGraph: { title, description, type: "website", siteName: "Hotdog Rewards" },
   twitter: { card: "summary_large_image", title, description },
   icons: {
     // An emoji favicon needs no asset pipeline and no 404 when the CDN is cold.
