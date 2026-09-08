@@ -46,7 +46,11 @@ export function useLive(): LiveState {
     item: "hot dog",
     itemPlural: "hot dogs",
   });
-  const [hotDogUsd, setHotDogUsd] = useState(1);
+  // What a hot dog costs, for the first paint only: the server sends the real
+  // figure in `hello` and it wins. This is what the page shows in the fraction
+  // of a second before the socket answers, and what it keeps if the socket
+  // never does — so it has to be the truth, not a placeholder. It said 1.
+  const [hotDogUsd, setHotDogUsd] = useState(1.5);
   const [roundMs, setRoundMs] = useState(300_000);
   const [round, setRound] = useState<Round | null>(null);
   const [msLeft, setMsLeft] = useState(0);
